@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sormas-cm
+  namespace: ga-test
+data:
+
+  sormas_postgres_user: sormas_user
+  sormas_docker_version: 2.8.0
+  sormas_version: 1.46.0
+  sormas_server_url: sormas-docker-test.com
+  sormas_url: https://github.com/hzi-braunschweig/sormas-project/releases/download/
+
+  db_host: postgres
+  domain_name: sormas
+  db_name: sormas
+  db_name_audit: sormas_audit
+  db_jdbc_maxpoolsize: '128'
+  locale: de-de
+  epidprefix: deu
+  mail_host: localhost
+  separator: \;
+  email_sender_address: noreply@sormas-docker-test.com
+  email_sender_name: sormas
+  latitude: '52.2109803'
+  longitude: '10.5314925'
+  map_zoom: '10'
+  mail_from: "root@localhost"
+  sormas_path: /srv/dockerdata/sormas
+  appserver_jvm_max: 4096m
+  appserver_mem: 4300m
+  appserver_mem_reserved: 1500m
+  appserver_cpus: '2.0'
+  webserver_mem: 1000m
+  webserver_mem_reserved: 200m
+  webserver_cpus: '2.0'
+  db_mem: 2000m
+  db_mem_reserved: 1000m
+  db_cpus: '2.0'
+  db_dump_mem: 500m
+  db_dump_mem_reserved: 100m
+  db_dump_cpus: '1.0'
+  tz: europe/berlin
+  disable_certbot: 'true'
+  letsencrypt_mail: '' 
+  geo_uuid: ''
+  devmode: 'false'
+  json_logging: 'false'
+
+  custombranding_enabled: 'false'
+  custombranding_name: sormas
+  custombranding_logo_path: none

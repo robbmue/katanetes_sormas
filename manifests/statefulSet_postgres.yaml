@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: ga-test
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  serviceName: postgres-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          command: 
+            - -c
+            - 'config_file=/etc/postgresql/postgresql.conf'
+          image: hzibraunschweig/sormas-postgres:2.8.0
+          ports: 
+          - containerPort: 5432
+            name: postgres
+          volumeMounts:
+          - name: postgres
+            mountPath: /var/lib/postgresql/data
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: secret-postgres
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: db_name
+                  name: sormas-cm
+            - name: DB_NAME_AUDIT
+              valueFrom:
+                configMapKeyRef:
+                  key: db_name_audit
+                  name: sormas-cm
+            - name: SORMAS_POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: sormas_postgres_password
+                  name: sormas-cm
+            - name: SORMAS_POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: sormas_postgres_user
+                  name: sormas-cm
+            - name: TZ
+              valueFrom:
+                configMapKeyRef:
+                  key: tz
+                  name: sormas-cm
+          resources:
+            limits:
+              memory: 2G
+              cpu: '2'
+            requests: 
+              memory: 1G
+              cpu: 100m
+          livenessProbe:
+            exec:
+              command:
+              - psql
+              - -U
+              - $SORMAS_POSTGRES_USER
+              - -c 
+              - SELECT 1
+              - $DB_NAME
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          readinessProbe:
+            exec:
+              command:
+              - psql
+              - -U
+              - $SORMAS_POSTGRES_USER
+              - -c 
+              - SELECT 1
+              - $DB_NAME
+            initialDelaySeconds: 30
+            periodSeconds: 30
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi      
+          
+
+                

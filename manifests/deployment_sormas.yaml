@@ -1,0 +1,175 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sormas
+  namespace: ga-test
+spec: 
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector: 
+    matchLabels:
+      run: sormas
+  template:
+    metadata:
+      labels:
+        run: sormas
+    spec:
+      containers:
+        - image: hzibraunschweig/sormas-application:2.8.0
+          name: sormas
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 4300M
+            requests:
+              memory: 1500M
+          volumeMounts:
+          - name: custom
+            mountPath: /opt/sormas/custom
+          - name: sormas-logs
+            mountPath: /opt/domains/sormas/logs
+          livenessProbe:
+            exec:
+              command: 
+              - curl
+              - -f
+              - -I
+              - http://localhost:6080/sormas-ui/login
+            initialDelaySeconds: 300
+            periodSeconds: 30
+          readinessProbe:
+            exec:
+              command: 
+              - curl
+              - -f
+              - -I
+              - http://localhost:6080/sormas-ui/login
+            initialDelaySeconds: 300
+            periodSeconds: 30
+          env: 
+          - name: SORMAS_POSTGRES_USER
+            valueFrom: 
+              configMapKeyRef:
+                key: sormas_postgres_user
+                name: sormas-cm
+          - name: SORMAS_POSTGRES_PASSWORD
+            valueFrom: 
+              secretKeyRef:
+                key: sormas_postgres_password
+                name: secret-postgres
+          - name: SORMAS_SERVER_URL
+            valueFrom: 
+              configMapKeyRef:
+                key: sormas_server_url
+                name: sormas-cm
+          - name: DB_HOST
+            valueFrom: 
+              configMapKeyRef:
+                key: db_host
+                name: sormas-cm
+          - name: DOMAIN_NAME
+            valueFrom: 
+              configMapKeyRef:
+                key: domain_name
+                name: sormas-cm
+          - name: DB_JDBC_MAXPOOLSIZE
+            valueFrom: 
+              configMapKeyRef:
+                key: db_jdbc_maxpoolsize
+                name: sormas-cm
+          - name: DB_NAME
+            valueFrom: 
+              configMapKeyRef:
+                key: db_name
+                name: sormas-cm
+          - name: DB_NAME_AUDIT
+            valueFrom: 
+              configMapKeyRef:
+                key: db_name_audit
+                name: sormas-cm
+          - name: MAIL_HOST
+            valueFrom: 
+              configMapKeyRef:
+                key: mail_host
+                name: sormas-cm
+          - name: MAIL_FROM
+            valueFrom: 
+              configMapKeyRef:
+                key: mail_from
+                name: sormas-cm
+          - name: SORMAS_VERSION
+            valueFrom: 
+              configMapKeyRef:
+                key: sormas_version
+                name: sormas-cm
+          - name: LOCALE
+            valueFrom: 
+              configMapKeyRef:
+                key: locale
+                name: sormas-cm
+          - name: EPIDPREFIX
+            valueFrom: 
+              configMapKeyRef:
+                key: epidprefix
+                name: sormas-cm
+          - name: SEPARATOR
+            valueFrom: 
+              configMapKeyRef:
+                key: seperator
+                name: sormas-cm
+          - name: EMAIL_SENDER_ADDRESS
+            valueFrom: 
+              configMapKeyRef:
+                key: email_sender_address
+                name: sormas-cm
+          - name: EMAIL_SENDER_NAME
+            valueFrom: 
+              configMapKeyRef:
+                key: email_sender_name
+                name: sormas-cm
+          - name: LATITUDE
+            valueFrom: 
+              configMapKeyRef:
+                key: latitude
+                name: sormas-cm
+          - name: LONGITUDE
+            valueFrom: 
+              configMapKeyRef:
+                key: longitude
+                name: sormas-cm
+          - name: MAP_ZOOM
+            valueFrom: 
+              configMapKeyRef:
+                key: map_zoom
+                name: sormas-cm
+          - name: TZ
+            valueFrom: 
+              configMapKeyRef:
+                key: tz
+                name: sormas-cm
+          - name: JVM_MAX
+            valueFrom: 
+              configMapKeyRef:
+                key: appserver_jvm_max
+                name: sormas-cm
+          - name: GEO_UUID
+            valueFrom: 
+              configMapKeyRef:
+                key: geo_uuid
+                name: sormas-cm
+          - name: DEVMODE
+            valueFrom: 
+              configMapKeyRef:
+                key: devmode
+                name: sormas-cm
+          - name: JSON_LOGGING
+            valueFrom: 
+              configMapKeyRef:
+                key: json_logging
+                name: sormas-cm
+      volumes: 
+      - name: custom
+        persistentVolumeClaim:
+          claimName: custom
+      - name: sormas-logs
+        emptyDir: {}
