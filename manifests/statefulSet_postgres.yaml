@@ -11,14 +11,13 @@ spec:
   replicas: 1
   template:
     metadata:
+      # annotations: 
+      #   io.kubernetes.cri.untrusted-workload: "true"
       labels:
         app: postgres
     spec:
       containers:
         - name: postgres
-          command: 
-            - -c
-            - 'config_file=/etc/postgresql/postgresql.conf'
           image: hzibraunschweig/sormas-postgres:2.8.0
           ports: 
           - containerPort: 5432
@@ -26,6 +25,7 @@ spec:
           volumeMounts:
           - name: postgres
             mountPath: /var/lib/postgresql/data
+            subPath: postgres
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -44,9 +44,9 @@ spec:
                   name: sormas-cm
             - name: SORMAS_POSTGRES_PASSWORD
               valueFrom:
-                configMapKeyRef:
-                  key: sormas_postgres_password
-                  name: sormas-cm
+                secretKeyRef:
+                  key: password
+                  name: secret-postgres
             - name: SORMAS_POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
@@ -64,28 +64,16 @@ spec:
             requests: 
               memory: 1G
               cpu: 100m
-          livenessProbe:
-            exec:
-              command:
-              - psql
-              - -U
-              - $SORMAS_POSTGRES_USER
-              - -c 
-              - SELECT 1
-              - $DB_NAME
-            initialDelaySeconds: 30
-            periodSeconds: 30
           readinessProbe:
-            exec:
-              command:
-              - psql
-              - -U
-              - $SORMAS_POSTGRES_USER
-              - -c 
-              - SELECT 1
-              - $DB_NAME
-            initialDelaySeconds: 30
-            periodSeconds: 30
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 15
+            periodSeconds: 20
   volumeClaimTemplates:
     - metadata:
         name: postgres
