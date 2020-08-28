@@ -19,6 +19,8 @@ spec:
       containers:
         - name: postgres
           image: hzibraunschweig/sormas-postgres:2.8.0
+          imagePullPolicy: IfNotPresent
+          args: ["-c", "config_file=/etc/postgresql/postgresql.conf"]
           ports: 
           - containerPort: 5432
             name: postgres
