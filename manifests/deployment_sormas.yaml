@@ -11,6 +11,8 @@ spec:
       run: sormas
   template:
     metadata:
+      # annotations: 
+      #   io.kubernetes.cri.untrusted-workload: "true"
       labels:
         run: sormas
     spec:
@@ -23,8 +25,6 @@ spec:
               memory: 5000M
             requests:
               memory: 1500M
-          securityContext: 
-            privileged: true
           ports: 
           - containerPort: 6080
             protocol: TCP
