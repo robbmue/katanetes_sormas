@@ -12,8 +12,6 @@ spec:
       app: test
   template:
     metadata:
-      # annotations: 
-      #   io.kubernetes.cri.untrusted-workload: "true"
       labels:
         app: test
     spec:

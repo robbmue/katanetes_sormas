@@ -11,8 +11,6 @@ spec:
   replicas: 1
   template:
     metadata:
-      # annotations: 
-      #   io.kubernetes.cri.untrusted-workload: "true"
       labels:
         app: postgres
     spec:
