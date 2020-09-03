@@ -2,10 +2,10 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: sormas
-  namespace: ga-test
+  namespace: ga-test-kata
 spec:
   rules:
-  - host: ga-test.k8smaster      
+  - host: ga-test-kata.k8smaster      
     http:
       paths:
       - path: /

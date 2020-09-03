@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sormas
-  namespace: ga-test
+  namespace: ga-test-kata
 spec: 
   replicas: 1
   revisionHistoryLimit: 10
@@ -11,13 +11,13 @@ spec:
       run: sormas
   template:
     metadata:
-      # annotations: 
-      #   io.kubernetes.cri.untrusted-workload: "true"
       labels:
         run: sormas
     spec:
+      runtimeClassName: kata
       containers:
-        - image: hzibraunschweig/sormas-application:2.8.0
+        - image: robbmue/kata_sormas:latest
+          imagePullPolicy: Always
           name: sormas
           resources:
             limits:
@@ -25,27 +25,33 @@ spec:
               memory: 5000M
             requests:
               memory: 1500M
+          command: 
+            - sleep
+            - 'infinity'
           ports: 
           - containerPort: 6080
             protocol: TCP
             name: payara
+          - containerPort: 6048
+            protocol: TCP
+            name: payara-admin
           volumeMounts:
           - name: custom
             mountPath: /opt/sormas/custom
           - name: sormas-logs
             mountPath: /opt/domains/sormas/logs
-          livenessProbe:
-            httpGet:
-              path: /sormas-ui/login
-              port: 6080
-            initialDelaySeconds: 300
-            periodSeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /sormas-ui/login
-              port: 6080
-            initialDelaySeconds: 300
-            periodSeconds: 30
+          # livenessProbe:
+          #   httpGet:
+          #     path: /sormas-ui/login
+          #     port: 6080
+          #   initialDelaySeconds: 300
+          #   periodSeconds: 30
+          # readinessProbe:
+          #   httpGet:
+          #     path: /sormas-ui/login
+          #     port: 6080
+          #   initialDelaySeconds: 300
+          #   periodSeconds: 30
           env: 
           - name: SORMAS_POSTGRES_USER
             valueFrom: 

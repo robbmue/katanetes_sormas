@@ -2,13 +2,13 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: sormas-cm
-  namespace: ga-test
+  namespace: ga-test-kata
 data:
 
   sormas_postgres_user: sormas_user
   sormas_docker_version: 2.8.0
   sormas_version: 1.46.0
-  sormas_server_url: sormas-docker-test.com
+  sormas_server_url: ga-test-kata.k8smaster
   sormas_url: https://github.com/hzi-braunschweig/sormas-project/releases/download/
 
   db_host: postgres
@@ -16,8 +16,8 @@ data:
   db_name: sormas
   db_name_audit: sormas_audit
   db_jdbc_maxpoolsize: '128'
-  locale: de-de
-  epidprefix: deu
+  locale: de-DE
+  epidprefix: DEU
   mail_host: localhost
   separator: \;
   email_sender_address: noreply@sormas-docker-test.com

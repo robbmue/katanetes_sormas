@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: custom
-  namespace: ga-test
+  namespace: ga-test-kata
 spec: 
   accessModes:
   - ReadWriteOnce
