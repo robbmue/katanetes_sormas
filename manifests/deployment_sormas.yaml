@@ -16,7 +16,7 @@ spec:
     spec:
       runtimeClassName: kata
       containers:
-        - image: robbmue/kata_sormas:latest
+        - image: robbmue/sormas_kata:latest
           imagePullPolicy: Always
           name: sormas
           resources:
@@ -25,9 +25,6 @@ spec:
               memory: 5000M
             requests:
               memory: 1500M
-          command: 
-            - sleep
-            - 'infinity'
           ports: 
           - containerPort: 6080
             protocol: TCP
@@ -40,18 +37,18 @@ spec:
             mountPath: /opt/sormas/custom
           - name: sormas-logs
             mountPath: /opt/domains/sormas/logs
-          # livenessProbe:
-          #   httpGet:
-          #     path: /sormas-ui/login
-          #     port: 6080
-          #   initialDelaySeconds: 300
-          #   periodSeconds: 30
-          # readinessProbe:
-          #   httpGet:
-          #     path: /sormas-ui/login
-          #     port: 6080
-          #   initialDelaySeconds: 300
-          #   periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /sormas-ui/login
+              port: 6080
+            initialDelaySeconds: 300
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /sormas-ui/login
+              port: 6080
+            initialDelaySeconds: 300
+            periodSeconds: 30
           env: 
           - name: SORMAS_POSTGRES_USER
             valueFrom: 
