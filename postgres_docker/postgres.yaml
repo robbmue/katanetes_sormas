@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  serviceName: postgres-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      runtimeClassName: kata
+      containers:
+        - name: postgres
+          image: postgres:10
+          imagePullPolicy: IfNotPresent
+          ports: 
+          - containerPort: 5432
+            name: postgres
+          volumeMounts:
+          - name: postgres
+            mountPath: /var/lib/postgresql/data
+            subPath: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              value: perfectpassword
+            - name: POSTGRES_USER
+              value: amazinguser
+            - name: POSTGRES_DB
+              value: awesomedb
+          resources: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec: 
+  selector:
+    app: postgres
+  ports: 
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432  

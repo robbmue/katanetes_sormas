@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: sormas
+  namespace: {{ .Values.metadata.namespace }}
+spec:
+  rules:
+  - host: ga-test-kata.k8smaster      
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: sormas 
+          servicePort: 80

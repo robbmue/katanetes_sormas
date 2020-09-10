@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sormas
-  namespace: ga-test-kata
+  namespace: {{ .Values.metadata.namespace }}
 spec: 
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   revisionHistoryLimit: 10
   selector: 
     matchLabels:
@@ -14,17 +14,13 @@ spec:
       labels:
         run: sormas
     spec:
-      runtimeClassName: kata
+      runtimeClassName: {{ .Values.runtime }}
       containers:
-        - image: robbmue/sormas_kata:latest
-          imagePullPolicy: Always
+        - image: {{ .Values.image.sormas }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: sormas
           resources:
-            limits:
-              cpu: 2000m
-              memory: 5000M
-            requests:
-              memory: 1500M
+            {{- toYaml .Values.resources | nindent 12 }}
           ports: 
           - containerPort: 6080
             protocol: TCP

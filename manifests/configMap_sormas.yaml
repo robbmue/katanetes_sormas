@@ -7,7 +7,7 @@ data:
 
   sormas_postgres_user: sormas_user
   sormas_docker_version: 2.8.0
-  sormas_version: 1.46.0
+  sormas_version: 1.47.0
   sormas_server_url: ga-test-kata.k8smaster
   sormas_url: https://github.com/hzi-braunschweig/sormas-project/releases/download/
 
