@@ -46,9 +46,6 @@ export PGPASSWORD=${SORMAS_POSTGRES_PASSWORD}
 SLEEP=10
 COUNT=0
 
-mkdir -p /opt/domains/sormas/logs/
-touch /opt/domains/sormas/logs/server.log
-tail -f $LOG_FILE_PATH/server.log &&
 
 while [ $(check_db) -ne 1 ];do
   echo "Waiting for ${DB_NAME} DB to get ready ..."
@@ -178,10 +175,6 @@ Rscript -e 'library(dplyr)'
 #   cp ${APP} ${DOMAIN_DIR}/autodeploy
 # done
 
-${ASADMIN} deploy ${DOMAIN_DIR}/deployments/sormas-rest.war
-${ASADMIN} deploy ${DOMAIN_DIR}/deployments/sormas-ear.ear
-${ASADMIN} deploy ${DOMAIN_DIR}/deployments/sormas-ui.war
-
 SLEEP=10
 COUNT=0
 while [ $(check_java) -gt 0 ];do
@@ -205,6 +198,13 @@ start_sormas
 
 #sleep 60
 #echo >> ${LOG_FILE_PATH}/server.log
+
+${ASADMIN} deploy ${DOMAIN_DIR}/deployments/sormas-rest.war
+${ASADMIN} deploy ${DOMAIN_DIR}/deployments/sormas-ear.ear
+${ASADMIN} deploy ${DOMAIN_DIR}/deployments/sormas-ui.war
+
+tail -f $LOG_FILE_PATH/server.log 
+
 
 # on SIGTERM (POD shutdown) stop payara and exit
 # trap stop_payara SIGTERM

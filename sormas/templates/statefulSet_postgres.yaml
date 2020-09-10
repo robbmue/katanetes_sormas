@@ -17,7 +17,7 @@ spec:
       runtimeClassName: {{ .Values.runtime }}
       containers:
         - name: postgres
-          image: robbmue/postgres_kata:latest
+          image: {{ .Values.image.postgres.name }}:{{ .Values.image.postgres.version}}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ["-c", "config_file=/etc/postgresql/postgresql.conf"]
           ports: 

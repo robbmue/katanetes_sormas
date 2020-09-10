@@ -16,7 +16,7 @@ spec:
     spec:
       runtimeClassName: {{ .Values.runtime }}
       containers:
-        - image: {{ .Values.image.sormas }}
+        - image: {{ .Values.image.sormas.name }}:{{ .Values.image.sormas.version}}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: sormas
           resources:
