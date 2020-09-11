@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres
-  namespace: {{ .Values.metadata.namespace }}
+  namespace: {{ .Release.Name }}
 spec:
   selector:
     matchLabels:
@@ -36,12 +36,12 @@ spec:
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: db_name
+                  key: DB_NAME
                   name: sormas-cm
             - name: DB_NAME_AUDIT
               valueFrom:
                 configMapKeyRef:
-                  key: db_name_audit
+                  key: DB_NAME_AUDIT
                   name: sormas-cm
             - name: SORMAS_POSTGRES_PASSWORD
               valueFrom:
@@ -51,20 +51,17 @@ spec:
             - name: SORMAS_POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
-                  key: sormas_postgres_user
+                  key: SORMAS_POSTGRES_USER
                   name: sormas-cm
             - name: TZ
               valueFrom:
                 configMapKeyRef:
-                  key: tz
+                  key: TZ
                   name: sormas-cm
           resources:
             limits:
-              memory: 2G
-              cpu: '2'
-            requests: 
-              memory: 1G
-              cpu: 100m
+              memory: {{ .Values.db.limits.mem }}
+              cpu: {{ .Values.db.limits.cpus }}
           readinessProbe:
             tcpSocket:
               port: 5432

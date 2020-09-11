@@ -2,51 +2,41 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: sormas-cm
-  namespace: {{ .Values.metadata.namespace }}
+  namespace: {{ .Release.Name }}
 data:
 
-  sormas_postgres_user: sormas_user
-  sormas_docker_version: {{ .Values.sormas_docker_version}}
-  sormas_version: {{ .Values.sormas_version }}
-  sormas_server_url: {{ .Values.sormas_server_url }}
-  sormas_url: https://github.com/hzi-braunschweig/sormas-project/releases/download/
+  SORMAS_POSTGRES_USER: {{ .Values.sormas.postgres_user }}
+  SORMAS_DOCKER_VERSION: {{ .Values.sormas.docker_version | quote }}
+  SORMAS_VERSION: {{ .Values.sormas.version | quote }}
+  SORMAS_SERVER_URL: {{ .Release.Name }}.{{ .Values.sormas.domain }}
+  SORMAS_URL: {{ .Values.sormas.url }}
+  APPSERVER_JVM_MAX: {{ .Values.sormas.appserver_jvm_max }}
 
-  db_host: postgres
-  domain_name: sormas
-  db_name: sormas
-  db_name_audit: sormas_audit
-  db_jdbc_maxpoolsize: '128'
-  locale: de-DE
-  epidprefix: DEU
-  mail_host: localhost
-  separator: \;
-  email_sender_address: noreply@sormas-docker-test.com
-  email_sender_name: sormas
-  latitude: {{ .Values.latitude }}
-  longitude: {{ .Values.longitude }}
-  map_zoom: {{ .Values.map_zoom }}
-  mail_from: "root@localhost"
-  sormas_path: /srv/dockerdata/sormas
-  appserver_jvm_max: 4096m
-  appserver_mem: 4300m
-  appserver_mem_reserved: 1500m
-  appserver_cpus: '2.0'
-  webserver_mem: 1000m
-  webserver_mem_reserved: 200m
-  webserver_cpus: '2.0'
-  db_mem: 2000m
-  db_mem_reserved: 1000m
-  db_cpus: '2.0'
-  db_dump_mem: 500m
-  db_dump_mem_reserved: 100m
-  db_dump_cpus: '1.0'
-  tz: {{ .Values.tz }}
-  disable_certbot: 'true'
-  letsencrypt_mail: '' 
-  geo_uuid: ''
-  devmode: 'false'
-  json_logging: 'false'
+  LATITUDE: {{ .Values.latitude | quote }}
+  LONGITUDE: {{ .Values.longitude | quote }}
+  MAP_ZOOM: {{ .Values.map_zoom | quote }}
+  TZ: {{ .Values.tz }}
+  LOCALE: {{ .Values.locale }}
+  DOMAIN_NAME: {{ .Values.domain_name }}
+  EPIDPREFIX: {{ .Values.epidprefix }}
+  SEPARATOR: {{ .Values.separator }}
+  DISABLE_CERTBOT: {{ .Values.disable_certbot | quote }}
+  LETSENCRYPT_MAIL: {{ default "" .Values.letsencrypt_mail | quote }}
+  GEO_UUID: {{ default "" .Values.geo_uuid | quote }}
+  DEVMODE: {{ .Values.devmode | quote }}
+  JSON_LOGGING: {{ .Values.json_logging | quote }}
+  PROMETHEUS_SERVERS: {{ .Values.prometheus_servers | quote }}
 
-  custombranding_enabled: 'false'
-  custombranding_name: sormas
-  custombranding_logo_path: none
+  DB_HOST: {{ .Values.db.host }}
+  DB_NAME: {{ .Values.db.name }}
+  DB_NAME_AUDIT: {{ .Values.db.name_audit }}
+  DB_JDBC_MAXPOOLSIZE: {{ .Values.db.jdbc_maxpoolsize | quote }}
+
+  MAIL_HOST: {{ .Values.mail.host }}
+  MAIL_FROM: {{ .Values.mail.from }}
+  EMAIL_SENDER_ADDRESS: {{ .Values.mail.sender_address }}
+  EMAIL_SENDER_NAME: {{ .Values.mail.sender_name }}
+
+  CUSTOMBRANDING_ENABLED: {{ .Values.custombranding.enabled | quote }}
+  CUSTOMBRANDING_NAME: {{ .Values.custombranding.name }}
+  CUSTOMBRANDING_LOGO_PATH: {{ .Values.custombranding.logo_path }}

@@ -6,9 +6,6 @@ replicaCount: 1
 
 runtime: kata
 
-metadata:
-  namespace: ga-test-helm
-
 image:
   pullPolicy: IfNotPresent
   sormas: 
@@ -18,22 +15,49 @@ image:
     name: robbmue/postgres_kata
     version: latest
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-sormas_docker_version: 2.8.0
-sormas_version: 1.47.0
-sormas_server_url: ga-test-helm.k8smaster
-latitude: '52.2109803'
-longitude: '10.5314925'
-map_zoom: '10'
+latitude: 52.2109803
+longitude: 10.5314925
+map_zoom: 10
 tz: europe/berlin
+locale: de-DE
+domain_name: sormas
+epidprefix: DEU
+separator: \;
+disable_certbot: true
+letsencrypt_mail: 
+geo_uuid: 
+devmode: false
+json_logging: false
+prometheus_servers: 127.0.0.1
+
+sormas: 
+  postgres_user: sormas_user
+  postgres_password: perfectpassword
+  url: https://github.com/hzi-braunschweig/SORMAS-Project/releases/download/
+  docker_version: 2.8.0
+  version: 1.47.0
+  domain: k8smaster
+  appserver_jvm_max: 4096m
+  limits: 
+    mem: 4300M
+    cpus: 2000m
+
+db:
+  host: postgres
+  name: sormas
+  name_audit: sormas_audit
+  jdbc_maxpoolsize: 128
+  limits: 
+    mem: 2000M
+    cpus: 2000m
+
+mail:
+  host: localhost
+  from: root@localhost
+  sender_address: noreply@sormas-docker-test.com
+  sender_name: SORMAS
+
+custombranding: 
+  enabled: false
+  name: SORMAS
+  logo_path: none
