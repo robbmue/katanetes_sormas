@@ -1,0 +1,14 @@
+apiVersion: appcatalog.appscode.com/v1alpha1
+kind: AppBinding
+metadata:
+  name: ab-postgres
+  namespace: {{ .Release.Name }}
+spec:
+  clientConfig:
+    service:
+      name: postgres
+      port: 5432
+      scheme: postgresql
+  secret:
+    name: secret-postgres
+  type: postgres

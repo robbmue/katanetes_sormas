@@ -2,12 +2,12 @@ apiVersion: stash.appscode.com/v1alpha1
 kind: Repository
 metadata:
   name: s3-repo
-  namespace: ga-test-kata
+  namespace: {{ .Release.Name }}
 spec:
   backend:
     s3:
       endpoint: s3.netzlink.com # use server URL for s3 compatible other storage service
       bucket: ga-test-kata
       region: rzb-west
-      prefix: /backup/sormas/
+      prefix: /backup/sormas/{{ .Release.Name }}/
     storageSecretName: s3-secret

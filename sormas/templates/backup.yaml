@@ -1,0 +1,19 @@
+apiVersion: stash.appscode.com/v1beta1
+kind: BackupConfiguration
+metadata:
+  name: backup
+  namespace: {{ .Release.Name }}
+spec:
+  schedule: "*/5 * * * *"
+  task:
+    name: postgres-backup-10.6
+  repository:
+    name: s3-repo
+  target:
+    ref:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+      name: ab-postgres
+  retentionPolicy:
+    keepLast: 5
+    prune: true
