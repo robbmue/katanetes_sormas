@@ -2,11 +2,11 @@ apiVersion: stash.appscode.com/v1beta1
 kind: BackupConfiguration
 metadata:
   name: backup
-  namespace: {{ .Release.Name }}
+  namespace: ga-test-kata #{{ .Release.Name }}
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/30 * * * *"
   task:
-    name: postgres-backup-10.6
+    name: postgres-backup-10.14.0
   repository:
     name: s3-repo
   target:
@@ -15,5 +15,6 @@ spec:
       kind: AppBinding
       name: ab-postgres
   retentionPolicy:
+    name: keep5
     keepLast: 5
     prune: true

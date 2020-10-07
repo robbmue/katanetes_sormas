@@ -2,7 +2,7 @@ apiVersion: appcatalog.appscode.com/v1alpha1
 kind: AppBinding
 metadata:
   name: ab-postgres
-  namespace: {{ .Release.Name }}
+  namespace: ga-test-kata #{{ .Release.Name }}
 spec:
   clientConfig:
     service:
