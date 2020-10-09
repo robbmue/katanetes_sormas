@@ -6,8 +6,8 @@ metadata:
 spec:
   backend:
     s3:
-      endpoint: s3.netzlink.com # use server URL for s3 compatible other storage service
+      endpoint: "http://10.10.13.140:9000" # use server URL for s3 compatible other storage service
       bucket: ga-test-kata
-      region: rzb-west
+      region: eu-central-1
       prefix: /backup/sormas/ga-test-kata #{{ .Release.Name }}/
     storageSecretName: s3-secret

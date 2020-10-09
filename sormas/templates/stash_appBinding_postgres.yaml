@@ -12,3 +12,4 @@ spec:
   secret:
     name: secret-postgres
   type: postgres
+  version: "10.14"

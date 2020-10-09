@@ -5,6 +5,7 @@ metadata:
   namespace: ga-test-kata #{{ .Release.Name }}
 spec:
   schedule: "*/30 * * * *"
+  paused: false
   task:
     name: postgres-backup-10.14.0
   repository:
