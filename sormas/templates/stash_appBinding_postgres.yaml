@@ -2,7 +2,7 @@ apiVersion: appcatalog.appscode.com/v1alpha1
 kind: AppBinding
 metadata:
   name: ab-postgres
-  namespace: ga-test-kata #{{ .Release.Name }}
+  namespace: {{ .Release.Name }}
 spec:
   clientConfig:
     service:
@@ -11,5 +11,12 @@ spec:
       scheme: postgresql
   secret:
     name: secret-postgres
+  secretTransforms:
+  - renameKey:
+      from: username
+      to: POSTGRES_USER
+  - renameKey:
+      from: password
+      to: POSTGRES_PASSWORD
   type: postgres
   version: "10.14"

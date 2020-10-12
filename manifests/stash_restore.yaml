@@ -1,0 +1,17 @@
+apiVersion: stash.appscode.com/v1beta1
+kind: RestoreSession
+metadata:
+  name: sample-postgres-restore
+  namespace: ga-test-kata
+spec:
+  task:
+    name: postgres-restore-10.14.0
+  repository:
+    name: s3-repo
+  target:
+    ref:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+      name: ab-postgres
+  rules:
+    - snapshots: [latest]

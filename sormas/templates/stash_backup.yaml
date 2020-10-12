@@ -2,10 +2,10 @@ apiVersion: stash.appscode.com/v1beta1
 kind: BackupConfiguration
 metadata:
   name: backup
-  namespace: ga-test-kata #{{ .Release.Name }}
+  namespace: {{ .Release.Name }}
 spec:
   schedule: "*/30 * * * *"
-  paused: false
+  paused: true
   task:
     name: postgres-backup-10.14.0
   repository:
