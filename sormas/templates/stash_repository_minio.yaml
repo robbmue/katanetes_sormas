@@ -1,4 +1,5 @@
-apiVersion: stash.appscode.com/v1alpha1
+{{- /*
+ apiVersion: stash.appscode.com/v1alpha1
 kind: Repository
 metadata:
   name: s3-repo
@@ -9,4 +10,5 @@ spec:
       endpoint: "http://10.10.92.239" # use server URL for s3 compatible other storage service
       bucket: stash
       prefix: /{{ .Release.Name }}
-    storageSecretName: s3-secret
+    storageSecretName: s3-secret 
+*/ -}}

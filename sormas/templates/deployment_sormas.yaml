@@ -25,10 +25,10 @@ spec:
               cpu: {{ .Values.sormas.limits.cpus }}
           ports: 
           - containerPort: 6080
-            protocol: TCP
+            #protocol: TCP
             name: payara
           - containerPort: 6048
-            protocol: TCP
+            #protocol: TCP
             name: payara-admin
           volumeMounts:
           - name: custom

@@ -1,10 +1,11 @@
-apiVersion: stash.appscode.com/v1beta1
+{{- /*
+ apiVersion: stash.appscode.com/v1beta1
 kind: BackupConfiguration
 metadata:
   name: backup
   namespace: {{ .Release.Name }}
 spec:
-  schedule: "*/30 * * * *"
+  schedule: "* * * * *"
   paused: true
   task:
     name: postgres-backup-10.14.0
@@ -19,3 +20,5 @@ spec:
     name: keep5
     keepLast: 5
     prune: true
+ 
+*/ -}}

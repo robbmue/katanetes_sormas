@@ -7,6 +7,10 @@ spec:
   selector:
     run: sormas
   ports: 
-    - protocol: TCP
+    - name: http
       port: 80
+      #protocol: TCP
+      targetPort: payara
+    - name: import
+      port: 6080
       targetPort: payara

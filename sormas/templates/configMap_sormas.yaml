@@ -40,3 +40,16 @@ data:
   CUSTOMBRANDING_ENABLED: {{ .Values.custombranding.enabled | quote }}
   CUSTOMBRANDING_NAME: {{ .Values.custombranding.name }}
   CUSTOMBRANDING_LOGO_PATH: {{ .Values.custombranding.logo_path }}
+  CUSTOMBRANDING_USE_LOGINSIDEBAR: {{ .Values.custombranding.use_loginsidebar | quote}}
+  CUSTOMBRANDING_LOGINBACKGROUND_PATH: {{ default "" .Values.custombranding.loginbackground_path | quote }}
+
+  SORMAS_ORG_ID: {{ .Values.sormas.org.id }}
+  SORMAS_ORG_NAME: {{ .Values.sormas.org.name }}
+  SORMAS2SORMAS_ENABLED: ''
+  SORMAS_S2S_CERT_PASS: {{ default "" .Values.sormas.s2s.cert_pass | quote }}
+  SORMAS_S2S_REST_PASSWORD: {{ default "" .Values.sormas.s2s.rest_password | quote }}
+  
+  CACERTS_PASS: {{ default "" .Values.cacerts_pass }}
+  KEYSTORE_PASS: {{ default "" .Values.keystore_pass }}
+  CASEARCHIVEDAYS: {{ default "" .Values.casearchivedays | quote }}
+  EVENTARCHIVEDAYS: {{ default "" .Values.eventarchivedays | quote }}

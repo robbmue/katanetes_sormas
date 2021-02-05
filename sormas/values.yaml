@@ -9,10 +9,10 @@ runtime: kata
 image:
   pullPolicy: IfNotPresent
   sormas: 
-    name: robbmue/sormas_kata
+    name: robbmue/sormas_no_autodeploy
     version: latest
   postgres:
-    name: robbmue/postgres_kata
+    name: robbmue/sormas_postgres_ba
     version: latest
 
 latitude: 52.2109803
@@ -32,15 +32,21 @@ prometheus_servers: 127.0.0.1
 
 sormas: 
   postgres_user: sormas_user
-  postgres_password: perfectpassword
+  postgres_password: password
   url: https://github.com/hzi-braunschweig/SORMAS-Project/releases/download/
-  docker_version: 2.8.0
-  version: 1.47.0
+  docker_version: 2.13.2
+  version: 1.51.1
   domain: k8smaster
   appserver_jvm_max: 4096m
   limits: 
     mem: 4300M
     cpus: 2000m
+  org:
+    id: HZI_TEST
+    name: 'HZI Braunschweig'
+  s2s:
+    cert_pass: password
+    rest_passweord: passwordpassword
 
 db:
   host: postgres
@@ -61,3 +67,11 @@ custombranding:
   enabled: false
   name: SORMAS
   logo_path: none
+  use_loginsidebar: true
+  loginbackground_path: 
+
+cacerts_pass: changeit
+keystore_pass: changeit
+
+casearchivedays: 90
+eventarchivedays: 90

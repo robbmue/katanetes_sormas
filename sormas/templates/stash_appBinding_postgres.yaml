@@ -1,4 +1,5 @@
-apiVersion: appcatalog.appscode.com/v1alpha1
+{{- /*
+ apiVersion: appcatalog.appscode.com/v1alpha1
 kind: AppBinding
 metadata:
   name: ab-postgres
@@ -19,4 +20,5 @@ spec:
       from: password
       to: POSTGRES_PASSWORD
   type: postgres
-  version: "10.14"
+  version: "10.14" 
+*/ -}}

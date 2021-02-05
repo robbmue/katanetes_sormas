@@ -75,7 +75,7 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: postgres
-        namespace: ga-test-kata
+        namespace: {{ .Release.Name }}
       spec:
         accessModes: ["ReadWriteOnce"]
         resources:
