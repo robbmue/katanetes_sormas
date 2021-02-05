@@ -23,6 +23,9 @@ spec:
             limits:
               memory: {{ .Values.sormas.limits.mem }}
               cpu: {{ .Values.sormas.limits.cpus }}
+            requests:
+              memory: 256Mi
+              cpu: 250m
           ports: 
           - containerPort: 6080
             #protocol: TCP

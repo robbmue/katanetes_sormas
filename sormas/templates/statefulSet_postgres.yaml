@@ -62,6 +62,9 @@ spec:
             limits:
               memory: {{ .Values.db.limits.mem }}
               cpu: {{ .Values.db.limits.cpus }}
+            requests:
+              memory: 256Mi
+              cpu: 250m
           readinessProbe:
             tcpSocket:
               port: 5432
